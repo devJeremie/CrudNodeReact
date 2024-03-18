@@ -5,6 +5,7 @@ const mysql = require("mysql")
 
 const app = express(); //permet  d'utiliser les méthodes de l'objet express dans la variable "app"
 
+app.use(express.json()); 
 app.use(cors());
 
 const database = mysql.createConnection({
@@ -20,7 +21,20 @@ app.get("/", (req, res) => {  //crée un endpoint a ladresse "/" et ensuite il a
     database.query(sql, (err, data) => { //fonction de rappel qui prend deux arguments err pour les error et data qui sont les données a retrourner
        if(err) return res.json("Error"); // la condition  est vraie, on execute ce qu'il y a après le "if", sinon Salut a toi depuis le backend
        return res.json(data); 
+    });
+});
+
+app.post('/create', (req, res) => {
+    const sql = "INSERT INTO student (`name`, `email`) VALUES (?)";
+    const values = [ 
+        req.body.name, 
+        req.body.email
+    ]
+    database.query(sql, [values], (err, data) => {
+        if(err) return res.json("Error");
+        return res.json(data);
     })
+    
 })
 
 app.listen(8081, () => { //attribue le port  8081 au serveur et exécute une fonction anonyme listen
