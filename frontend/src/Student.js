@@ -31,7 +31,7 @@ function Student() {
                                 <td>{data.name}</td>
                                 <td>{data.email}</td>
                                 <td>
-                                    <button className='btn btn-primary'>Modifier</button>
+                                    <Link to={`update/${data.id}`} className='btn btn-primary'>Modifier</Link>
                                     <button className='btn btn-danger ms-2'>Supprimer</button>
                                 </td>
                             </tr>
