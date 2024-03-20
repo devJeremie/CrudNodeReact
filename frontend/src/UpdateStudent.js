@@ -1,16 +1,17 @@
 import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios  from "axios";
 
 function UpdateStudent() {
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const {id} = useParams();
     const navigate = useNavigate();
 
     function handleSubmit(event) { //handle submit function for the form
         event.preventDefault(); 
-        axios.post('http://localhost:8081/create', {name, email}) //methode post on create page form
+        axios.put('http://localhost:8081/update/'+id, { name, email}) //methode post on create page form
         .then(res => {
             console.log(res);
             navigate('/'); //back to home if ok
@@ -21,7 +22,7 @@ function UpdateStudent() {
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
         <div className='w-50 bg-white rounded p-3'>
             <form onSubmit={handleSubmit}>
-                <h2>Modifier un étudiant</h2>
+                <h2>Modifier Etudiant</h2>
                 <div className='mb-2'>
                     <label htmlFor="">Nom </label>
                     <input type="text" placeholder='Entrez votre nom' className='form-control' 
@@ -34,7 +35,7 @@ function UpdateStudent() {
                     onChange = {e => setEmail(e.target.value)}
                     />
                 </div>
-                <button className='btn btn-success'>Soumettre</button>
+                <button className='btn btn-success'>Modifier</button>
             </form>
         </div>
     </div>

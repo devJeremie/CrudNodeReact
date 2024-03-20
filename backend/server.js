@@ -1,12 +1,22 @@
 const express = require("express"); //création de const express qui permet d'acceder à express
-const cors = require("cors");//permet aux différents serveurs d'échanger des données entre eux.
+const cors = require('cors');//permet aux différents serveurs d'échanger des données entre eux.
 const mysql = require("mysql")
 
 
 const app = express(); //permet  d'utiliser les méthodes de l'objet express dans la variable "app"
 
+// const corsOptions = {
+//     origin: 'http://localhost:8081',
+//     optionsSuccessStatus : 200
+// }
+
 app.use(express.json()); 
+
 app.use(cors());
+// app.use(cors({
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+// }));
+
 
 const database = mysql.createConnection({
     host: 'localhost',
@@ -31,6 +41,20 @@ app.post('/create', (req, res) => {
         req.body.email
     ]
     database.query(sql, [values], (err, data) => {
+        if(err) return res.json("Error");
+        return res.json(data);
+    })
+    
+})
+
+app.put('/update/:id',cors(corsOptions), (req, res) => {
+    const sql = "update student set `name` = ?, `email` = ? where id = ?";
+    const values = [ 
+        req.body.name, 
+        req.body.email
+    ]
+    const id = req.params.id;
+    database.query(sql, [...values, id], (err, data) => {
         if(err) return res.json("Error");
         return res.json(data);
     })
