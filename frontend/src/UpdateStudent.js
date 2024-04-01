@@ -11,8 +11,9 @@ function UpdateStudent() {
 
     function handleSubmit(event) { //handle submit function for the form
         event.preventDefault(); 
-        axios.put('http://localhost:8081/update/'+id, { name, email}) //methode post on create page form
-        .then(res => {
+        const updatedStudent = {name, email};
+        axios.put(`http://localhost:8081/update/${id}`, updatedStudent) //methode post on create page form
+       .then(res => {
             console.log(res);
             navigate('/'); //back to home if ok
         }).catch(err => console.log(err)); //if error print on conole
