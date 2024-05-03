@@ -14,7 +14,7 @@ function CreateStudent() {
         .then(res => {
             console.log(res);
             navigate('/'); //back to home if ok
-        }).catch(err => console.log(err)); //if error print on conole
+        }).catch(err => console.log(err)); //if error print on console
     }
 
   return (
