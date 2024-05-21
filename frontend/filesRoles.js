@@ -51,7 +51,7 @@ const userModel = require('./user.model');
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'oot',
+  password: '',
   database: 'crudnode'
 });
 
