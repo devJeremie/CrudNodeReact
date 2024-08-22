@@ -24,60 +24,86 @@ app.use(express.json());
 //     next();
 //  });
 
+// Activation de CORS (Cross-Origin Resource Sharing) pour permettre les requêtes entre domaines
 app.use(cors(corsOptions));
 
+// Création d'une connexion à la base de données MySQL
 const database = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'crudnode'
+  host: 'localhost', // Adresse IP ou nom de domaine du serveur MySQL
+  user: 'root', // Nom d'utilisateur pour se connecter à la base de données
+  password: '', // Mot de passe pour se connecter à la base de données
+  database: 'crudnode' // Nom de la base de données à utiliser
 })
 
+// Route pour récupérer tous les étudiants
 app.get("/", (req, res) => {
-    const sql = "SELECT  * FROM student";
-    database.query(sql, (err, data) => {
-       if(err) return res.json("Error");
-       return res.json(data);
-    });
+  // Requête SQL pour récupérer tous les étudiants
+  const sql = "SELECT  * FROM student";
+  // Exécution de la requête SQL
+  database.query(sql, (err, data) => {
+    // Si une erreur se produit, renvoie un message d'erreur
+    if(err) return res.json("Error");
+    // Sinon, renvoie les données récupérées
+    return res.json(data);
+  });
 });
 
+// Route pour créer un nouvel étudiant
 app.post('/create', (req, res) => {
-    const sql = "INSERT INTO student (`name`, `email`) VALUES (?)";
-    const values = [ 
-        req.body.name, 
-        req.body.email
-    ]
-    database.query(sql, [values], (err, data) => {
-        if(err) return res.json("Error");
-        return res.json(data);
-    })
-   
+  // Requête SQL pour insérer un nouvel étudiant
+  const sql = "INSERT INTO student (`name`, `email`) VALUES (?)";
+  // Valeurs à insérer
+  const values = [ 
+    req.body.name, // Nom de l'étudiant
+    req.body.email // Email de l'étudiant
+  ]
+  // Exécution de la requête SQL
+  database.query(sql, [values], (err, data) => {
+    // Si une erreur se produit, renvoie un message d'erreur
+    if(err) return res.json("Error");
+    // Sinon, renvoie les données insérées
+    return res.json(data);
+  })
 })
-//Modification d'un profil user
+
+// Route pour modifier un étudiant existant
 app.put('/update/:id', (req, res) => {
-    const sql = "update student set `name` =?, `email` =? where id =?";
-    const values = [ 
-        req.body.name, 
-        req.body.email
-    ]
-    const id = req.params.id;
+  // Requête SQL pour modifier un étudiant
+  const sql = "update student set `name` =?, `email` =? where id =?";
+  // Valeurs à modifier
+  const values = [ 
+    req.body.name, // Nouveau nom de l'étudiant
+    req.body.email // Nouvel email de l'étudiant
+  ]
+  // ID de l'étudiant à modifier
+  const id = req.params.id;
 
-    database.query(sql, [...values, id], (err, data) => {
-        if(err) return res.json("Error");
-        return res.json(data);
-    })
+  // Exécution de la requête SQL
+  database.query(sql, [...values, id], (err, data) => {
+    // Si une erreur se produit, renvoie un message d'erreur
+    if(err) return res.json("Error");
+    // Sinon, renvoie les données modifiées
+    return res.json(data);
+  })
 })
 
+// Route pour supprimer un étudiant
 app.delete('/student/:id', (req, res) => {
-    const sql = "DELETE FROM student WHERE id =?";
-    const id = req.params.id; 
-    
-    database.query(sql, [id], (err, data) => {
-        if(err) return res.json("Error");
-        return res.json(data);
-    })
+  // Requête SQL pour supprimer un étudiant
+  const sql = "DELETE FROM student WHERE id =?";
+  // ID de l'étudiant à supprimer
+  const id = req.params.id; 
+  
+  // Exécution de la requête SQL
+  database.query(sql, [id], (err, data) => {
+    // Si une erreur se produit, renvoie un message d'erreur
+    if(err) return res.json("Error");
+    // Sinon, renvoie les données supprimées
+    return res.json(data);
+  })
 })
 
+// Démarrage du serveur sur le port 8081
 app.listen(8081, () => {
-    console.log('Server is running on port 8081');
+  console.log('Server is running on port 8081');
 })
