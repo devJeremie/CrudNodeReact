@@ -51,20 +51,37 @@ app.get("/", (req, res) => {
 // Route pour créer un nouvel étudiant
 app.post('/create', (req, res) => {
   // Requête SQL pour insérer un nouvel étudiant
-  const sql = "INSERT INTO student (`name`, `email`) VALUES (?)";
+  //
+  const sql = "INSERT INTO student (`name`, `email`) VALUES (?, ?)";
   // Valeurs à insérer
   const values = [ 
     req.body.name, // Nom de l'étudiant
     req.body.email // Email de l'étudiant
-  ]
+  ];
   // Exécution de la requête SQL
-  database.query(sql, [values], (err, data) => {
+  database.query(sql, values, (err, data) => {
     // Si une erreur se produit, renvoie un message d'erreur
-    if(err) return res.json("Error");
+    if (err) {
+      console.log('SQL Error:', err);
+      return res.status(500).json({ error: 'Error in inserting student' });
+    }
+    // if(err) return res.json("Error");
     // Sinon, renvoie les données insérées
     return res.json(data);
   })
 })
+// app.post('/create', (req, res) => {
+//   const sql = "INSERT INTO student (`name`, `email`) VALUES (?, ?)";
+//   const values = [req.body.name, req.body.email];
+//   database.query(sql, values, (err, data) => {
+//     if (err) {
+//       console.error('Erreur SQL:', err);
+//       // Renvoi d'un code HTTP 500 et message d'erreur JSON
+//       return res.status(500).json({ message: 'Erreur lors de l\'insertion en base', error: err });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 // Route pour modifier un étudiant existant
 app.put('/update/:id', (req, res) => {

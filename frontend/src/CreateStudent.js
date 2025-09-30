@@ -12,7 +12,7 @@ function CreateStudent() {
         event.preventDefault(); 
         axios.post('http://localhost:8081/create', {name, email}) //methode post on create page form
         .then(res => {
-            console.log(res);
+            console.log('insertion réussi:' ,res.data);
             navigate('/'); //back to home if ok
         }).catch(err => console.log(err)); //if error print on console
     }

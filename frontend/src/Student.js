@@ -6,11 +6,21 @@ function Student() {
 
     const [student, setStudent] = useState([])
 
-    useEffect(() => { // This useEffect hook is used to fetch data from the server when the component is mounted.
+    // useEffect(() => { // This useEffect hook is used to fetch data from the server when the component is mounted.
+    //     axios.get('http://localhost:8081/')
+    //     .then(res => setStudent(res.data))  //Log the response
+    //     .catch(err => console.log(err)); //Log any errors
+    // }, [])  // Empty dependency array, so it runs once on mount
+    useEffect(() => {
         axios.get('http://localhost:8081/')
-        .then(res => setStudent(res.data))  //Log the response
-        .catch(err => console.log(err)); //Log any errors
-    }, [])  // Empty dependency array, so it runs once on mount
+            .then(res => {
+                console.log(res.data); // Vérifie ici la structure
+                // Si res.data est un objet, adapte la ligne suivante :
+                // Exemple : setStudent(res.data.students) si ton tableau s'appelle 'students'
+                setStudent(Array.isArray(res.data) ? res.data : res.data.students || []);
+            })
+            .catch(err => console.log(err));
+    }, []);
 
     const handleDelete = async (id) => {
         try {
@@ -44,6 +54,15 @@ function Student() {
                                     <button className='btn btn-danger ms-2' onClick={ e => handleDelete(data.id)}>Supprimer</button>
                                 </td>
                             </tr>
+                        //   (student ?? []).map((data, i) => (
+                        //       <tr key={i}>
+                        //           <td>{data.name}</td>
+                        //           <td>{data.email}</td>
+                        //           <td>
+                        //               <Link to={`update/${data.id}`} className='btn btn-primary'>Modifier</Link>
+                        //               <button className='btn btn-danger ms-2' onClick={() => handleDelete(data.id)}>Supprimer</button>
+                        //           </td>
+                        //       </tr>
                         ))
                     }
                 </tbody>
