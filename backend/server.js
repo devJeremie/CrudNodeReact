@@ -5,16 +5,24 @@ const mysql = require("mysql")
 const app = express();
 
 const corsOptions = {
-    origin: [
-        'http://localhost:3000',//adresse seveur front et celle qui est a noté sur votre navigateur Google Chrome
-        'http://localhost:8081',//adresse serveur backend
-    ],
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    headers: 'Content-Type,Authorization',
-    credentials: true, // allow cookies to be sent with requests
+  // Liste des origines autorisées. 
+  // Cela signifie que seules ces adresses pourront communiquer avec ton backend.
+  origin: [
+    'http://localhost:3000', // Serveur frontend (React par exemple), visible dans le navigateur.
+    'http://localhost:8081', // Serveur backend (parfois nécessaire quand on teste via un autre port).
+  ],
+  // Code de réponse renvoyé pour une requête pré-vol (preflight request).
+  // Certains navigateurs anciens ne supportent pas le code 204,
+  // donc on met 200 pour assurer la compatibilité (ex: IE11, Smart TV).
+  optionsSuccessStatus: 200,
+  // Méthodes HTTP autorisées pour les requêtes cross-origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  // En-têtes HTTP que le client est autorisé à utiliser dans ses requêtes
+  headers: 'Content-Type,Authorization',
+  // Autorise l'envoi de cookies, tokens d'auth (headers Authorization),
+  // et autres informations d'identification avec les requêtes cross-origin.
+  credentials: true,
 };
-
 app.use(express.json());
 //test du server cors a cause de l'erreur
 // app.use((req, res, next) => {

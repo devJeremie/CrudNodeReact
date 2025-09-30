@@ -30,15 +30,25 @@ function Student() {
     //         console.log(err);
     //     }
     // }
+    
+    // Fonction asynchrone qui gère la suppression d’un étudiant via son id
     const handleDelete = async (id) => {
         try {
+            // Envoi d'une requête DELETE à l'API backend avec l'identifiant de l'étudiant
             const res = await axios.delete('http://localhost:8081/student/' + id);
+
+            // Vérifie le résultat renvoyé par le backend : 
+            // si 'affectedRows > 0', cela signifie qu'une ligne a bien été supprimée dans la base de données
             if (res.data.affectedRows > 0) {
+                // Mise à jour du state local "student"
+                // Ici on filtre le tableau pour enlever l'étudiant dont l'id correspond à celui supprimé
                 setStudent(student.filter(s => s.id !== id));
             } else {
+                // Si aucune ligne n’a été supprimée (par exemple ID inexistant), on envoie un message dans la console
                 console.log('Aucun étudiant supprimé, vérifiez l\'ID');
             }
         } catch (err) {
+            // Si une erreur survient (connexion, serveur, etc.), elle est affichée dans la console
             console.log(err);
         }
     }
