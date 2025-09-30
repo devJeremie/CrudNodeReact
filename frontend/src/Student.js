@@ -22,11 +22,23 @@ function Student() {
             .catch(err => console.log(err));
     }, []);
 
+    // const handleDelete = async (id) => {
+    //     try {
+    //         await axios.delete('http://localhost:8081/student/'+id)
+    //         window.location.reload()
+    //     } catch(err) {
+    //         console.log(err);
+    //     }
+    // }
     const handleDelete = async (id) => {
         try {
-            await axios.delete('http://localhost:8081/student/'+id)
-            window.location.reload()
-        } catch(err) {
+            const res = await axios.delete('http://localhost:8081/student/' + id);
+            if (res.data.affectedRows > 0) {
+                setStudent(student.filter(s => s.id !== id));
+            } else {
+                console.log('Aucun étudiant supprimé, vérifiez l\'ID');
+            }
+        } catch (err) {
             console.log(err);
         }
     }
