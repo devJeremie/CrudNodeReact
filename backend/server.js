@@ -60,7 +60,7 @@ app.get("/", (req, res) => {
 app.post('/create', (req, res) => {
   // Requête SQL pour insérer un nouvel étudiant
   //
-  const sql = "INSERT INTO student (`name`, `email`) VALUES (?, ?)";
+  const sql = "INSERT INTO student (`name`, `email`) VALUES (?, ?)";//certains ont une erreur avec les deux ? peu etre en mettre qu'un
   // Valeurs à insérer
   const values = [ 
     req.body.name, // Nom de l'étudiant
