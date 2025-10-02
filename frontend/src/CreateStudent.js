@@ -30,9 +30,9 @@ function CreateStudent() {
     //         console.log(err);
     //     }
     // }
-    //Certaines fonctions en JavaScript doivent être async/await et d’autres non, tout simplement selon 
-    // ce qu’elles font : si la fonction doit attendre un résultat “lent” 
-    // (genre une requête vers un serveur, lire un fichier, ou appeler une API), elle doit être en async/await.
+//     Certaines fonctions en JavaScript doivent être async/await et d’autres non, tout simplement selon 
+//     ce qu’elles font : si la fonction doit attendre un résultat “lent” 
+//     (genre une requête vers un serveur, lire un fichier, ou appeler une API), elle doit être en async/await.
 // Fonction synchrone
 //     Si la fonction fait juste des calculs, du filtrage, ou manipule des données déjà en mémoire, 
 // tout se fait “instantanément” : pas besoin de async / await, elle renvoie le résultat directement.
