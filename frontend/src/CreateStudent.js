@@ -16,6 +16,17 @@ function CreateStudent() {
             navigate('/'); //back to home if ok
         }).catch(err => console.log(err)); //if error print on console
     }
+    //exemple handleSubmit avec async/await 
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     try {
+    //         const res = await axios.post('http://localhost:8081/create', { name, email });
+    //         console.log('insertion réussi:', res.data);
+    //         navigate('/'); // retour à l'accueil si tout va bien
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
   return (
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
